@@ -16,7 +16,7 @@
     <fieldset class="uk-fieldset">
         <legend class="uk-legend">Please log in</legend>
         <div class="uk-margin">
-            <input class="uk-input" type="text" placeholder="Login" name="login">
+            <input class="uk-input" type="text" placeholder="Login" name="login" {% if name %}value="{{name}}"{% endif %}>
         </div>
         <div class="uk-margin">
             <input class="uk-input" type="password" placeholder="Password" name="password">

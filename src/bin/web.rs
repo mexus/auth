@@ -17,6 +17,7 @@ use auth::pass_checker::PassChecker;
 use auth::pass_db::PassDb;
 use auth::shorewall::Shorewall;
 use rocket::State;
+use rocket::http::{Cookie, Cookies};
 use rocket::request::{Form, FlashMessage};
 use rocket::response::{Flash, Redirect};
 use rocket_contrib::Template;
@@ -71,12 +72,18 @@ fn auth_get(
     remote_addr: SocketAddr,
     fw: State<Shorewall>,
     flash: Option<FlashMessage>,
+    cookies: Cookies,
 ) -> Result<Template, <Shorewall as Firewall>::Error> {
     let ip = remote_addr.ip();
     let flash: Option<FlashMsg> = flash.map(|f| f.into());
     Ok(Template::render(
         "auth",
-        json!{{"ip": ip.to_string(), "already_there": fw.check_ip(&ip)?, "flash": flash}},
+        json!{{
+            "ip": ip.to_string(),
+            "already_there": fw.check_ip(&ip)?,
+            "flash": flash,
+            "name": cookies.get("name").map(|c| c.value()),
+        }},
     ))
 }
 
@@ -95,7 +102,9 @@ fn auth_post(
     pass_checker: State<PassChecker>,
     pass_db: State<PassDb>,
     fw: State<Shorewall>,
+    mut cookies: Cookies,
 ) -> Result<Flash<Redirect>, <Shorewall as Firewall>::Error> {
+    cookies.add(Cookie::new("name", form.get().login.clone()));
     let hash = match pass_db.find_hash(&form.get().login) {
         Some(hash) => hash,
         None => return Ok(Flash::error(Redirect::to("/auth"), "User not found")),
@@ -107,7 +116,10 @@ fn auth_post(
         }
         Ok(Flash::success(Redirect::to("/auth"), "Success!"))
     } else {
-        Ok(Flash::error(Redirect::to("/auth"), "Password doesn't match"))
+        Ok(Flash::error(
+            Redirect::to("/auth"),
+            "Password doesn't match",
+        ))
     }
 }
 
