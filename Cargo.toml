@@ -1,0 +1,35 @@
+[package]
+name = "auth"
+version = "0.1.0"
+authors = ["mexus <gilaldpellaeon@gmail.com>"]
+
+[dependencies]
+# Serialization
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
+rmp-serde = "*"
+
+# Password checking
+ring = "*"
+
+# Command line parsing
+clap = "*"
+
+# Easy error generation
+quick-error = "*"
+
+# Logging
+slog = "*"
+
+# Web interface
+rocket = "*"
+rocket_codegen = "*"
+
+# User password input
+rpassword = "*"
+
+[dependencies.rocket_contrib]
+version = "*"
+default-features = false
+features = ["tera_templates", "json"]
