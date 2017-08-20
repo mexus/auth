@@ -123,6 +123,12 @@ fn auth_post(
     }
 }
 
+/// Index page. Simply redirects to the auth page.
+#[get("/")]
+fn index() -> Redirect {
+    Redirect::to("/auth")
+}
+
 fn main() {
     let matches = build_cli().get_matches();
     let shorewall_bin = matches.value_of("SHOREWALL_BIN").expect(
@@ -143,7 +149,7 @@ fn main() {
     let pass_db = PassDb::load(pass_db_path).expect("Can't load a password database");
     let shorewall = Shorewall::new(shorewall_bin, private_zone);
     rocket::ignite()
-        .mount("/", routes!{auth_get, auth_post})
+        .mount("/", routes!{auth_get, auth_post, index})
         .attach(Template::fairing())
         .manage(shorewall)
         .manage(pass_checker)
