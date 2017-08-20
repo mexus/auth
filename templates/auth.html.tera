@@ -1,7 +1,7 @@
 {% extends "base" %}
 {% block title %}Firewall auth{% endblock title %}
 {% block content %}
-<h1>Yo!</h1>
+<h1>Yo{% if name %}, {{name}}{% endif %}!</h1>
 <h3>Your ip is:</h3>
 <pre>{{ip}}</pre>
 {% if flash %}
