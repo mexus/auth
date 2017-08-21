@@ -22,12 +22,15 @@ quick-error = "*"
 # Logging
 slog = "*"
 
-# Web interface
-rocket = "*"
-rocket_codegen = "*"
-
 # User password input
 rpassword = "*"
+
+# Web interface
+rocket_codegen = "*"
+
+[dependencies.rocket]
+version = "*"
+features = ["tls"]
 
 [dependencies.rocket_contrib]
 version = "*"
