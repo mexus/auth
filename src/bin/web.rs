@@ -11,6 +11,7 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
+extern crate time;
 
 use auth::firewall::Firewall;
 use auth::pass_checker::PassChecker;
@@ -104,7 +105,11 @@ fn auth_post(
     fw: State<Shorewall>,
     mut cookies: Cookies,
 ) -> Result<Flash<Redirect>, <Shorewall as Firewall>::Error> {
-    cookies.add(Cookie::new("name", form.get().login.clone()));
+    cookies.add(
+        Cookie::build("name", form.get().login.clone())
+            .expires(time::now() + time::Duration::weeks(1))
+            .finish(),
+    );
     let hash = match pass_db.find_hash(&form.get().login) {
         Some(hash) => hash,
         None => return Ok(Flash::error(Redirect::to("/auth"), "User not found")),

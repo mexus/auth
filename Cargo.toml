@@ -28,6 +28,9 @@ rpassword = "*"
 # Web interface
 rocket_codegen = "*"
 
+# Time handling
+time = "*"
+
 [dependencies.rocket]
 version = "*"
 features = ["tls"]
