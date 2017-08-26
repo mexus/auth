@@ -2,7 +2,7 @@
 #![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 
-extern crate auth;
+extern crate firewall_auth;
 extern crate clap;
 extern crate rocket;
 #[macro_use]
@@ -13,10 +13,10 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate time;
 
-use auth::firewall::Firewall;
-use auth::pass_checker::PassChecker;
-use auth::pass_db::PassDb;
-use auth::shorewall::Shorewall;
+use firewall_auth::firewall::Firewall;
+use firewall_auth::pass_checker::PassChecker;
+use firewall_auth::pass_db::PassDb;
+use firewall_auth::shorewall::Shorewall;
 use rocket::State;
 use rocket::http::{Cookie, Cookies};
 use rocket::request::{Form, FlashMessage};

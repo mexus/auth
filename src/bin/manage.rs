@@ -1,9 +1,9 @@
-extern crate auth;
+extern crate firewall_auth;
 extern crate clap;
 extern crate rpassword;
 
-use auth::pass_checker::PassChecker;
-use auth::pass_db::PassDb;
+use firewall_auth::pass_checker::PassChecker;
+use firewall_auth::pass_db::PassDb;
 use std::path::Path;
 
 /// Command line options.

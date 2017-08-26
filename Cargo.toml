@@ -1,5 +1,5 @@
 [package]
-name = "auth"
+name = "firewall-auth"
 version = "0.1.0"
 authors = ["mexus <gilaldpellaeon@gmail.com>"]
 
@@ -27,14 +27,12 @@ rpassword = "*"
 
 # Web interface
 rocket_codegen = "*"
+rocket = "*"
 
 # Time handling
 time = "*"
 
-[dependencies.rocket]
-version = "*"
-features = ["tls"]
-
+# Rocket additional components
 [dependencies.rocket_contrib]
 version = "*"
 default-features = false
